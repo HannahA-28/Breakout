@@ -1,13 +1,32 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Breakout
 {
+    enum Screen
+    {
+        Intro,
+        Game,
+        Win,
+        Lose
+    }
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        Screen screen;
+        Rectangle window;
+        Texture2D introTexture;
+        Texture2D gameTexture;
+        Texture2D winTexture;
+        Texture2D loseTexture;
+        MouseState mouseState;
+        KeyboardState keyboardState;
+        SpriteFont spriteFont;
 
         public Game1()
         {
@@ -20,6 +39,13 @@ namespace Breakout
         {
             // TODO: Add your initialization logic here
 
+            window = new Rectangle(0, 0, 800, 600);
+            _graphics.PreferredBackBufferWidth = window.Width;
+            _graphics.PreferredBackBufferHeight = window.Height;
+
+            screen = Screen.Intro;
+          
+
             base.Initialize();
         }
 
@@ -28,6 +54,13 @@ namespace Breakout
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            introTexture = Content.Load<Texture2D>("intro");
+            gameTexture = Content.Load<Texture2D>("game");
+            winTexture = Content.Load<Texture2D>("win");
+            loseTexture = Content.Load<Texture2D>("lose");
+            spriteFont = Content.Load<SpriteFont>("spriteFont");
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -37,6 +70,16 @@ namespace Breakout
 
             // TODO: Add your update logic here
 
+            keyboardState = Keyboard.GetState();
+
+            if (screen == Screen.Intro)
+            {
+                if (keyboardState.IsKeyDown(Keys.Enter))
+                {
+                    screen = Screen.Game;
+                }
+            }
+
             base.Update(gameTime);
         }
 
@@ -45,6 +88,20 @@ namespace Breakout
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            _spriteBatch.Begin();
+
+            if (screen == Screen.Intro)
+            {
+                _spriteBatch.Draw(introTexture, window, Color.White);
+                _spriteBatch.DrawString(spriteFont, "Click ENTER to play the game.", new Vector2(225, 440), Color.White);
+            }
+            else if (screen == Screen.Game)
+            {
+                _spriteBatch.Draw(gameTexture, window, Color.White);
+            }
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
