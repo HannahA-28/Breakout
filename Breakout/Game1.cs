@@ -12,7 +12,6 @@ namespace Breakout
         Win,
         Lose
     }
-
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -24,9 +23,15 @@ namespace Breakout
         Texture2D gameTexture;
         Texture2D winTexture;
         Texture2D loseTexture;
+        Texture2D paddleTexture;
+        Rectangle paddleRect;
+        Texture2D ballTexture;
+        Rectangle ballRect;
         MouseState mouseState;
         KeyboardState keyboardState;
         SpriteFont spriteFont;
+        Vector2 ballSpeed;
+        Vector2 paddleSpeed;
 
         public Game1()
         {
@@ -42,10 +47,13 @@ namespace Breakout
             window = new Rectangle(0, 0, 800, 600);
             _graphics.PreferredBackBufferWidth = window.Width;
             _graphics.PreferredBackBufferHeight = window.Height;
+            _graphics.ApplyChanges();
+
+            paddleRect = new Rectangle(350, 350, 75, 20);
+            ballRect = new Rectangle(200, 200, 15, 15);
 
             screen = Screen.Intro;
           
-
             base.Initialize();
         }
 
@@ -60,6 +68,8 @@ namespace Breakout
             winTexture = Content.Load<Texture2D>("win");
             loseTexture = Content.Load<Texture2D>("lose");
             spriteFont = Content.Load<SpriteFont>("spriteFont");
+            paddleTexture = Content.Load<Texture2D>("paddle");
+            ballTexture = Content.Load<Texture2D>("circle");
 
         }
 
@@ -99,6 +109,8 @@ namespace Breakout
             else if (screen == Screen.Game)
             {
                 _spriteBatch.Draw(gameTexture, window, Color.White);
+                _spriteBatch.Draw(paddleTexture, paddleRect, Color.White);
+                _spriteBatch.Draw(ballTexture, ballRect, Color.White);
             }
 
             _spriteBatch.End();
