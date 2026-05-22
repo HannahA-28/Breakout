@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +23,19 @@ namespace Breakout
             _rect = rect;
             _speed = Vector2.Zero;
         }
+        public void Update(KeyboardState keyboardState)
+        {
+            if (keyboardState.IsKeyDown(Keys.Left))
+            {
+                _speed.X -= 2;
+            }
 
+        }
         public Rectangle rect { get { return _rect; } }
-
-        public Rectangle window { get { return _window; } }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(_texture, _
         }
 
     }

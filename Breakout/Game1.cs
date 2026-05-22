@@ -32,6 +32,7 @@ namespace Breakout
         SpriteFont spriteFont;
         Vector2 ballSpeed;
         Vector2 paddleSpeed;
+        Paddle paddle;
 
         public Game1()
         {
@@ -49,8 +50,7 @@ namespace Breakout
             _graphics.PreferredBackBufferHeight = window.Height;
             _graphics.ApplyChanges();
 
-            paddleRect = new Rectangle(350, 350, 75, 20);
-            ballRect = new Rectangle(200, 200, 15, 15);
+            paddle = new Paddle(paddleTexture, new Rectangle(350, 350, 75, 20);
 
             screen = Screen.Intro;
           
@@ -81,6 +81,7 @@ namespace Breakout
             // TODO: Add your update logic here
 
             keyboardState = Keyboard.GetState();
+            paddle.Update(keyboardState);
 
             if (screen == Screen.Intro)
             {
