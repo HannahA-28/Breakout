@@ -50,7 +50,7 @@ namespace Breakout
             _graphics.PreferredBackBufferHeight = window.Height;
             _graphics.ApplyChanges();
 
-            paddle = new Paddle(paddleTexture, new Rectangle(350, 350, 75, 20);
+            paddle = new Paddle(paddleTexture, new Rectangle(350, 350, 75, 20));
 
             screen = Screen.Intro;
           
